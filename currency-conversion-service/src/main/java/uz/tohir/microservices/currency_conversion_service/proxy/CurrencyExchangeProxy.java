@@ -1,4 +1,4 @@
-package uz.tohir.microservices.currency_exchange_service.proxy;
+package uz.tohir.microservices.currency_conversion_service.proxy;
 
 import org.springframework.cloud.openfeign.FeignClient;
 
