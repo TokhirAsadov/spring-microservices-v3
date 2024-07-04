@@ -17,17 +17,28 @@ public class ApiGatewayConfiguration {
     public RouteLocator gatewayRouter(RouteLocatorBuilder builder) {
 
 
-        Function<PredicateSpec, Buildable<Route>> routeFunction
-                = p -> p.path("/get")
-                .filters(f -> f
-                        .addRequestHeader("MyHeader","MyURI")
-                        .addRequestParameter("Param","MyParam")
-                )
-                .uri("http://httpbin.org:80");
+//        Function<PredicateSpec, Buildable<Route>> routeFunction
+//                = p -> p.path("/get")
+//                .filters(f -> f
+//                        .addRequestHeader("MyHeader","MyURI")
+//                        .addRequestParameter("Param","MyParam")
+//                )
+//                .uri("http://httpbin.org:80");
 
 
         return builder.routes()
-                .route(routeFunction)
+                .route(p -> p.path("/get") // first custom route
+                        .filters(f -> f
+                                .addRequestHeader("MyHeader","MyURI")
+                                .addRequestParameter("Param","MyParam")
+                        )
+                        .uri("http://httpbin.org:80"))
+                .route(p -> p.path("/currency-exchange/**")  // second custom route connected with currency-exchange-service
+                        .uri("lb://currency-exchange-service")
+                )
+                .route(p -> p.path("/currency-conversion/**")  // third custom route connected with currency-conversion-service
+                        .uri("lb://currency-conversion-service")
+                )
                 .build();
     }
 }
