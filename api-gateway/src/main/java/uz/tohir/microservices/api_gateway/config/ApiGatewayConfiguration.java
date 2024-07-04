@@ -39,6 +39,13 @@ public class ApiGatewayConfiguration {
                 .route(p -> p.path("/currency-conversion/**")  // third custom route connected with currency-conversion-service
                         .uri("lb://currency-conversion-service")
                 )
+                .route(p -> p.path("/currency-conversion-new/**")  // fourth custom route connected with currency-conversion-service and also rewrite path
+                        .filters(f -> f.rewritePath(
+                                "/currency-conversion-new/(?<segment>.*)",
+                                "/currency-conversion/${segment}"
+                        ))
+                        .uri("lb://currency-conversion-service")
+                )
                 .build();
     }
 }
