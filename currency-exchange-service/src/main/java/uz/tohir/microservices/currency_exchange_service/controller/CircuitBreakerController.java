@@ -20,7 +20,7 @@ public class CircuitBreakerController {
     //@Retry(name = "sample-api", fallbackMethod = "hardcodedResponse"/* method name which should exist below*/) //resilience4j.retry.instances.[sample-api].maxAttempts=5
     //@CircuitBreaker(name = "default", fallbackMethod = "hardcodedResponse"/* method name which should exist below*/) //resilience4j.retry.instances.[sample-api].maxAttempts=5
     //@RateLimiter(name = "default") // 10s => 10000 calls to the sample-api
-    @Bulkhead(name = "default")
+    //@Bulkhead(name = "default")
     public String sampleApi() {
         logger.info("Sample Api call received");
         ResponseEntity<String> forEntity = new RestTemplate().getForEntity("http://localhost:8080/circuit-breaker", String.class);
