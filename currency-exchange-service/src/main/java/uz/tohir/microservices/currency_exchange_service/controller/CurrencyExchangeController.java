@@ -1,5 +1,7 @@
 package uz.tohir.microservices.currency_exchange_service.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,8 @@ import java.math.BigDecimal;
 @RestController
 @RequestMapping("/currency-exchange")
 public class CurrencyExchangeController {
+
+    private Logger logger = LoggerFactory.getLogger(CurrencyExchangeController.class);
 
     @Autowired
     private CurrencyExchangeRepository repository;
@@ -30,6 +34,9 @@ public class CurrencyExchangeController {
 //                to,
 //                BigDecimal.valueOf(50)
 //        );
+
+        //INFO [currency-exchange-service] [nio-8000-exec-1] [06fed4db10961d3d477d19834579019d-50fffeba275fc699] u.t.m.c.c.CurrencyExchangeController     : retrieveExchangeValue: from=USD, to=SUM
+        logger.info("retrieveExchangeValue: from={}, to={}", from, to);
 
         CurrencyExchange currencyExchange = repository.findByFromAndTo(from, to);
 
